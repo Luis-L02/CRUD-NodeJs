@@ -97,7 +97,7 @@ const guardar = async (req, res) => {
     await check('nombre', 'El Nombre es obligatorio y solo debe incluir letras').notEmpty().matches(String_space_regex).run(req);
     await check('apellido', 'El Apellido es obligatorio y solo debe incluir letras').notEmpty().matches(String_space_regex).run(req);
     await check('email', 'El email es obligatorio').notEmpty().run(req);
-    await check('email', 'El email no es valido').notEmpty().isEmail().run(req);
+    await check('email', 'El email no es valido').isEmail().run(req);
     await check('telefono', 'El telefono es obligatorio').notEmpty().run(req);
     await check('telefono', 'Solo se pueden ingresar numeros en el campo Telefono').isNumeric().run(req);
     await check('telefono', 'El telefono debe tener 10 digitos').isLength({ min: 10 }).isLength({ max: 10 }).run(req);
