@@ -1,0 +1,37 @@
+include templates/_head.pug
+include templates/_nav.pug
+
+body
+    div.container.w-50
+        div(class="mt-3 card text-center align-items-center")
+            div(class="card-body")
+                h1.card-title Editar cliente 
+                p(class="text-bg-danger") Editando cliente n-#{cliente.id}
+                if errores
+                    div
+                        each error in errores
+                            p(class="alert alert-danger") #{error.msg}
+                if !errores && mensaje        
+                    p(class="alert alert-success") #{mensaje}              
+                form(action="/actualizarCliente", method="POST" novalidate)
+                    input(type="hidden", name="id", value=cliente.id)
+                    .form-group.mt-3
+                    label(class="fw-bold" for="nombre") Nombre:
+                    input(class="border-4" type="text", id="nombre", name="nombre", class="form-control" value= cliente.nombre ? cliente.nombre : "")
+                    .form-group.mt-3
+                    label(class="fw-bold" for="apellido") Apellido:
+                    input(class="border-4" type="text", id="apellido", name="apellido", class="form-control", value= cliente.apellido ? cliente.apellido : "")
+
+                    .form-group.mt-3
+                    label(class="fw-bold" for="correo") Correo:
+                    input(class="border-4" type="email", id="email", name="email", class="form-control" ,value=cliente.email ? cliente.email : "", required)
+
+                    .form-group.mt-3
+                    label(class="fw-bold" for="telefono") Teléfono:
+                    input(class="border-4" type="tel", id="telefono", name="telefono", class="form-control", value=cliente.telefono ? cliente.telefono : "")
+                    p(class="text-light-emphasis") Ingresa solo los 10 digitos de tu número telefónico
+                    
+                    .form-group
+                    input(class="mt-3" type="submit", value="Guardar cliente", class="btn btn-light border-2 border-dark fw-bold")
+                    
+include templates/_footer.pug

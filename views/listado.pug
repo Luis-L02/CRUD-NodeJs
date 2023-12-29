@@ -1,0 +1,43 @@
+include templates/_head.pug
+include templates/_nav.pug
+body
+    h1.text-center.mt-3 Listado de Clientes
+
+    //pre= JSON.stringify(clientes, undefinded, 2)
+    div.container
+      if mensaje
+        p(class="alert alert-success text-center") #{mensaje}
+      if eliminado
+        p(class="alert alert-warning text-center") #{eliminado}  
+      if clientes.length
+        p(class="text-decoration-underline") Total de clientes: #{clientes.length}
+        table.table.table-bordered.table-striped
+          thead
+            tr
+              th ID
+              th Nombre
+              th Apellido
+              th Email
+              th Telefono
+              th Acciones
+
+          tbody
+            each cliente in clientes
+              tr
+                td= cliente.id
+                td= cliente.nombre
+                td= cliente.apellido
+                td= cliente.email
+                td= cliente.telefono
+                td
+                  form(action="/listado", method="POST", style="display: inline-block;")
+                    input(type="hidden", name="id", value=cliente.id, id="id")
+                    button.mx-2.btn.btn-danger(type="submit") Eliminar
+
+                  form(action="/editar", method="POST", style="display: inline-block;")
+                    input(type="hidden", name="id", value=cliente.id, id="id")
+                    button.mx-2.btn.btn-warning(type="submit") Editar     
+      else
+        p No hay clientes
+        
+include templates/_footer.pug

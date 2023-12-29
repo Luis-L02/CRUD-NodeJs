@@ -1,0 +1,38 @@
+include templates/_head.pug
+include templates/_nav.pug
+
+body
+    div.container.w-50
+        div(class="mt-3 card text-center align-items-center")
+            div(class="card-body")
+                h1.card-title Registro de Clientes
+                if errores
+                    div
+                        each error in errores
+                            p(class="alert alert-danger") #{error.msg}
+                if !errores && mensaje         
+                    p(class="alert alert-success") #{mensaje}
+                
+                form(action="/registro", method="POST" novalidate)
+                    .form-group.mt-3
+                    label(class="fw-bold" for="nombre") Nombre:
+                    input(class="border-4" type="text", id="nombre", name="nombre", class="form-control" )
+                   
+                    .form-group.mt-3
+                    label(class="fw-bold" for="apellido") Apellido:
+                    input(class="border-4" type="text", id="apellido", name="apellido", class="form-control")
+
+                    .form-group.mt-3
+                    label(class="fw-bold" for="correo") Correo:
+                    input(class="border-4" type="email", id="email", name="email", class="form-control" , required)
+
+                    .form-group.mt-3
+                    
+                    label(class="fw-bold" for="telefono") Teléfono:
+                    input(class="border-4" type="tel", id="telefono", name="telefono", class="form-control")
+                    p(class="text-light-emphasis") Ingresa solo los 10 digitos de tu número telefónico
+                    
+                    .form-group
+                    input(class="mt-3" type="submit", value="Registrar", class="btn btn-light border-2 border-dark fw-bold")
+
+include templates/_footer.pug
