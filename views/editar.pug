@@ -12,8 +12,9 @@ body
                         each error in errores
                             p(class="alert alert-danger") #{error.msg}
                 if !errores && mensaje        
-                    p(class="alert alert-success") #{mensaje}              
-                form(action="/actualizarCliente", method="POST" novalidate)
+                    p(class="alert alert-success") #{mensaje}  
+                                
+                form(action=`/editar/${cliente.id}`, method="POST" novalidate)
                     input(type="hidden", name="id", value=cliente.id)
                     .form-group.mt-3
                     label(class="fw-bold" for="nombre") Nombre:

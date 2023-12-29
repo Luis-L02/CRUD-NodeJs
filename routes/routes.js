@@ -5,13 +5,14 @@ const router = express.Router();
  
 router.get('/', principal);
 router.get('/listado', listado);
+
 router.get('/registro', registro);
-
-
 router.post('/registro', crearCliente);
-router.post('/listado', eliminarCliente);
-router.post('/editar', editarCliente);
-router.post('/listado', listado);
-router.post('/actualizarCliente', guardar);
+
+router.get('/editar/:id', editarCliente);
+router.get('/eliminar/:id', eliminarCliente);
+router.post('/editar/:id', guardar);
+
+
 
 export default router;

@@ -1,3 +1,4 @@
+import e from "express";
 import Cliente from "../models/cliente.js";
 import { check, validationResult } from 'express-validator';
 const principal =(req, res)=>{
@@ -67,7 +68,7 @@ const crearCliente = async (req, res) => {
 }
 
 const eliminarCliente = async (req, res) => {
-    const { id } = req.body; // extraer id de la url
+    const { id } = req.params;
     const resultado = await Cliente.destroy({ where: { id } }); // eliminar el cliente
     const clientes = await Cliente.findAll(); // consultar clientes
 
@@ -79,10 +80,10 @@ const eliminarCliente = async (req, res) => {
 }
 
 const editarCliente = async (req, res) => {
-    const { id} = req.body; // Extraer datos del body
-    console.log(id);
+    const { id } = req.params;
+    //console.log(id);
     const cliente = await Cliente.findByPk(id); // Buscar cliente por id
-    console.log(cliente.nombre);
+    //console.log(cliente.nombre);
     res.render('editar', {
         pagina: 'CRUD | Editar',
         cliente
@@ -90,7 +91,8 @@ const editarCliente = async (req, res) => {
 };
 
 const guardar = async (req, res) => {
-    const { nombre, apellido, email, telefono } = req.body;
+    const {nombre, apellido, email, telefono } = req.body;
+    const {id} = req.params;
 
     // Validaciones
     const String_space_regex = /^[A-Za-z\s]+$/;
@@ -104,14 +106,15 @@ const guardar = async (req, res) => {
     
     // Validar si el email ya esta registrado
     const emailRegistrado = await Cliente.findOne({ where: { email } });
-    if (emailRegistrado) {
-        return res.render('registro', {
-            pagina: 'CRUD | Registro',
-            errores: [{ msg: 'El email ya esta registrado' }]
-        });
-        
-    }
+    //console.log(emailRegistrado.id.toString());
+    //console.log(id);
+
     const errores = validationResult(req);
+
+    /*if (emailRegistrado && id !== emailRegistrado.id.toString()) {
+        return res.redirect('editar')
+    }*/
+
 
     if (!errores.isEmpty()) {
         return res.render('editar', {
@@ -121,7 +124,7 @@ const guardar = async (req, res) => {
         });
     }
 
-    const clientes = await Cliente.findAll();
+    //const clientes = await Cliente.findAll();
     try {
         const cliente = await Cliente.findByPk(id);
         
@@ -131,12 +134,9 @@ const guardar = async (req, res) => {
         cliente.telefono = telefono;
 
         await cliente.save();
-        
-        res.render('listado', {
-            pagina: 'CRUD | Listado',
-            clientes: clientes,
-            mensaje: `El cliente con id:${id} se actualizó correctamente`
-        });
+
+        return res.redirect('/listado');    
+
     } catch (error) {
         console.error(error);
         res.status(500).json({ mensaje: 'Error al actualizar el cliente' });

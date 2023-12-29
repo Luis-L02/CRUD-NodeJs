@@ -33,6 +33,13 @@ body
                     p(class="text-light-emphasis") Ingresa solo los 10 digitos de tu número telefónico
                     
                     .form-group
-                    input(class="mt-3" type="submit", value="Registrar", class="btn btn-light border-2 border-dark fw-bold")
+                    input(id="btn" class="mt-3" type="submit", value="Registrar", class="btn btn-light border-2 border-dark fw-bold", onclick="deshabilitarBoton()")
+
+script.
+    function deshabilitarBoton() {
+    var boton = document.getElementById('btn');
+    submitButton.disabled = true;
+    submitButton.form.submit();
+    }
 
 include templates/_footer.pug

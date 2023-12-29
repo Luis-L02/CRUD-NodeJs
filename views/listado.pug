@@ -30,11 +30,11 @@ body
                 td= cliente.email
                 td= cliente.telefono
                 td
-                  form(action="/listado", method="POST", style="display: inline-block;")
+                  form(action=`/eliminar/${cliente.id}`, method="get", style="display: inline-block;")
                     input(type="hidden", name="id", value=cliente.id, id="id")
                     button.mx-2.btn.btn-danger(type="submit") Eliminar
 
-                  form(action="/editar", method="POST", style="display: inline-block;")
+                  form(action=`/editar/${cliente.id}`, method="get", style="display: inline-block;")
                     input(type="hidden", name="id", value=cliente.id, id="id")
                     button.mx-2.btn.btn-warning(type="submit") Editar     
       else
