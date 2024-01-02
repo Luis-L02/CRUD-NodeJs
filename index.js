@@ -21,7 +21,7 @@ app.set('view engine','pug'); //plantilla
 app.set('views','./views');
 app.use(bodyparser.urlencoded({extended: true})); // para enviar datos desde formularios
 app.use(bodyparser.json()); // para enviar datos desde formularios
-app.use(express.static('public'));// servir archivos estaticos
+//app.use(express.static('public'));// servir archivos estaticos
 
 app.use("/",routes); // rutas
 
